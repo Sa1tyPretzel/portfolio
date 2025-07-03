@@ -48,6 +48,12 @@ export default async function initGame() {
     k.loadSprite("platformer-js", "./projects/platformer-js.png");
     k.loadShaderURL("tiledPattern", null, "./shaders/tiledPattern.frag");
 
+    if (k.width() < 1000) {
+        k.camScale(k.vec2(0.5));
+    } else {
+        k.camScale(k.vec2(0.8));
+    }
+
     const tiledBackground = k.add([
         k.uvquad(k.width(), k.height()),
         k.shader("tiledPattern", () => ({

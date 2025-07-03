@@ -10,7 +10,7 @@ export default function makePlayer(k, posVec2, speed) {
         {
             direction: k.vec2(0, 0),
             directionName: "walk-down",
-        }
+        },
     ]);
 
     return player;
