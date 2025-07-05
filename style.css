@@ -50,6 +50,7 @@ html {
 }
 
 .modal-content {
+  position: relative;
   background-color: var(--color2);
   border-color: var(--color1);
   border-style: solid;
@@ -127,4 +128,19 @@ p {
   font-size: 1.2rem;
   max-width: 40vw;
   user-select: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-btn:hover {
+  color: #000;
 }
