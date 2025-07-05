@@ -5,10 +5,12 @@ import { cameraZoomValueAtom, store } from "./store";
 import makeSection from "./components/Section";
 import makeEmailIcon from "./components/EmailIcon";
 import makeSocialIcon from "./components/SocialIcon";
+import makeSkillIcon from "./components/SkillIcon";
 import { makeAppear } from "./utils";
 
 export default async function initGame() {
     const generalData = await (await fetch("./configs/generalData.json")).json();
+    const skillsData = await (await fetch("./configs/skillsData.json")).json();
     const socialsData = await (await fetch("./configs/socialsData.json")).json();
 
     const k = makeKaplayCtx();
@@ -143,9 +145,30 @@ export default async function initGame() {
       }
     );
 
-    makeSection(k, k.vec2(k.center().x - 400, k.center().y), "Skills", (parent) => {
-        
-    });
+    makeSection(
+      k,
+      k.vec2(k.center().x - 400, k.center().y),
+      generalData.section2Name,
+      (parent) => {
+      
+        const container = parent.add([
+          k.opacity(0),
+          k.pos(-300, 0),
+        ]);
+
+        for (const skillData of skillsData) {
+          makeSkillIcon(
+            k,
+            container,
+            k.vec2(skillData.pos.x, skillData.pos.y),
+            skillData.logoData,
+            skillData.name
+          );
+        }  
+
+        makeAppear(k, container);
+        }
+    );
 
     makeSection(k, k.vec2(k.center().x + 400, k.center().y), "Experience", (parent) => {
         
