@@ -3,8 +3,14 @@ import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import { cameraZoomValueAtom, store } from "./store";
 import makeSection from "./components/Section";
+import makeEmailIcon from "./components/EmailIcon";
+import makeSocialIcon from "./components/SocialIcon";
+import { makeAppear } from "./utils";
 
 export default async function initGame() {
+    const generalData = await (await fetch("./configs/generalData.json")).json();
+    const socialsData = await (await fetch("./configs/socialsData.json")).json();
+
     const k = makeKaplayCtx();
     k.loadSprite("player", "./sprites/player.png", {
         sliceX: 4,
@@ -83,9 +89,59 @@ export default async function initGame() {
         tiledBackground.uniform.u_aspect = k.width() / k.height();
     });
 
-    makeSection(k, k.vec2(k.center().x, k.center().y - 400), "About", (parent) => {
+    makeSection(
+      k,
+      k.vec2(k.center().x, k.center().y - 400),
+      generalData.section1Name,
+      (parent) => {
+        const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
 
-    });
+        container.add([
+          k.text(generalData.header.title, { font: "ibm-bold", size: 88 }),
+          k.color(k.Color.fromHex(PALETTE.color1)),
+          k.pos(395, 0),
+          k.opacity(0),
+        ]);
+
+        container.add([
+          k.text(generalData.header.subtitle, {
+            font: "ibm-bold",
+            size: 48,
+          }),
+          k.color(k.Color.fromHex(PALETTE.color1)),
+          k.pos(485, 100),
+          k.opacity(0),
+        ]);
+
+        const socialContainer = container.add([k.pos(130, 0), k.opacity(0)]);
+
+        for (const socialData of socialsData) {
+            if (socialData.name === "Email") {
+                makeEmailIcon(
+                    k, 
+                    socialContainer, 
+                    k.vec2(socialData.pos.x, socialData.pos.y), 
+                    socialData.logoData, socialData.name, 
+                    socialData.address
+                );
+                continue;
+            }
+
+            makeSocialIcon(
+                k, 
+                socialContainer, 
+                k.vec2(socialData.pos.x, socialData.pos.y), 
+                socialData.logoData, 
+                socialData.name, 
+                socialData.link, 
+                socialData.description
+            );
+        }
+
+        makeAppear(k, container);
+        makeAppear(k, socialContainer);
+      }
+    );
 
     makeSection(k, k.vec2(k.center().x - 400, k.center().y), "Skills", (parent) => {
         
