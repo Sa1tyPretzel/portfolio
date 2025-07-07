@@ -1,0 +1,15 @@
+[
+  {
+    "pos": { "x": 150, "y": -100 },
+    "cardHeight": 250,
+    "roleData": {
+      "title": "lol",
+      "description": "[\\REDACTED\\]",
+      "company": {
+        "name": "[\\REDACTED]",
+        "startDate": "2024",
+        "endDate": "Present"
+      }
+    }
+  }
+]
