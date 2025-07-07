@@ -7,6 +7,7 @@ import makeEmailIcon from "./components/EmailIcon";
 import makeSocialIcon from "./components/SocialIcon";
 import makeSkillIcon from "./components/SkillIcon";
 import makeWorkExperienceCard from "./components/WorkExperienceCard";
+import makeProjectCard from "./components/ProjectCard";
 import { makeAppear } from "./utils";
 
 export default async function initGame() {
@@ -15,6 +16,9 @@ export default async function initGame() {
     const socialsData = await (await fetch("./configs/socialsData.json")).json();
     const experiencesData = await (
       await fetch("./configs/experiencesData.json")
+    ).json();
+    const projectsData = await (
+      await fetch("./configs/projectsData.json")
     ).json();
 
     const k = makeKaplayCtx();
@@ -57,9 +61,8 @@ export default async function initGame() {
     k.loadSprite("tailwind-logo", "./logos/tailwind-logo.png");
     k.loadSprite("python-logo", "./logos/python-logo.png");
     k.loadSprite("email-logo", "./logos/email-logo.png");
-    k.loadSprite("sonic-js", "./projects/sonic-js.png");
-    k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
-    k.loadSprite("platformer-js", "./projects/platformer-js.png");
+    k.loadSprite("pretzel-box", "./projects/pretzel-box.png");
+    k.loadSprite("js-fight", "./projects/js-fight.png");
     k.loadShaderURL("tiledPattern", null, "./shaders/tiledPattern.frag");
 
     if (k.width() < 1000) {
@@ -194,9 +197,26 @@ export default async function initGame() {
       }
     );
 
-    makeSection(k, k.vec2(k.center().x, k.center().y + 400), "Projects", (parent) => {
-        
-    });
+    makeSection(
+      k,
+      k.vec2(k.center().x, k.center().y + 400),
+      generalData.section4Name,
+      (parent) => {
+        const container = parent.add([k.opacity(0), k.pos(0, 0)]);
+
+        for (const project of projectsData) {
+          makeProjectCard(
+            k,
+            container,
+            k.vec2(project.pos.x, project.pos.y),
+            project.data,
+            project.thumbnail
+          );
+        }
+
+        makeAppear(k, container);
+      }
+    );
 
     makePlayer(k, k.vec2(k.center()), 700);
 }
