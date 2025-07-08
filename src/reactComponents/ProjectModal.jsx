@@ -5,10 +5,17 @@ export default function ProjectModal() {
   const projectData = useAtomValue(chosenProjectDataAtom);
   const [isVisible, setIsVisible] = useAtom(isProjectModalVisibleAtom);
 
+  const onClose = () => {
+    setIsVisible(false);
+  };
+
   return (
     isVisible && (
       <div className="modal">
         <div className="modal-content">
+          <button className="close-btn" onClick={onClose}>
+            &times;
+          </button>
           <h1>{projectData.title}</h1>
           <div className="modal-btn-container">
             {projectData.links.map((linkData) => (
@@ -22,14 +29,6 @@ export default function ProjectModal() {
                 {linkData.name}
               </button>
             ))}
-            <button
-              className={"modal-btn"}
-              onClick={() => {
-                setIsVisible(false);
-              }}
-            >
-              Close
-            </button>
           </div>
         </div>
       </div>
