@@ -8,12 +8,12 @@
   },
   {
     "pos": { "x": 700, "y": 250 },
-    "name": "X",
-    "description": "Here is my X/Twitter, I don't really use it much.",
-    "link": "https://x.com/",
+    "name": "LinkedIn",
+    "description": "Here is my LinkedIn profile, if you want to know more about me.",
+    "link": "https://www.linkedin.com/in/m-p-sp0025/",
     "logoData": {
-      "name": "x-logo",
-      "width": 128,
+      "name": "linkedin-logo",
+      "width": 140,
       "height": 128
     }
   },
